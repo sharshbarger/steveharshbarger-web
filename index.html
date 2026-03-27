@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steve Harshbarger — Music</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg-elevated: #141210;
+    --text: #e8e0d8;
+    --text-muted: #8a8078;
+    --accent: #c45e2c;
+    --accent-glow: rgba(196, 94, 44, 0.15);
+    --border: rgba(138, 128, 120, 0.15);
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('images/atmosphere.jpg') center/cover no-repeat;
+    filter: saturate(0.7) brightness(0.5);
+    z-index: 0;
+  }
+
+  /* fallback gradient if no image */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(10,10,10,0.3) 50%,
+      var(--bg) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 85vh;
+  }
+
+  .hero-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .hero-tagline {
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-player {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 540px;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(138, 128, 120, 0.2);
+    border-radius: 6px;
+    padding: 1.2rem;
+  }
+
+  .hero-player iframe {
+    border-radius: 4px;
+  }
+
+  .hero-player-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+  }
+
+  .hero h1 {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero .intro {
+    font-size: 1.05rem;
+    color: var(--text);
+    max-width: 560px;
+    opacity: 0.85;
+  }
+
+  .hero .intro p { margin-bottom: 1rem; }
+  .hero .intro p:last-child { margin-bottom: 0; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0.5;
+  }
+
+  /* ── SHARED SECTION ── */
+  section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .the-ask {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--text);
+    max-width: 680px;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── DIVIDER IMAGE ── */
+  .divider-art {
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .divider-art img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.7;
+  }
+
+  /* ── TRACKS ── */
+  .tracks-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .track-item {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+  }
+
+  .track-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .track-number {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.4rem;
+  }
+
+  .track-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  .track-item iframe {
+    border-radius: 4px;
+  }
+
+  /* ── ARTIST PHOTO ── */
+  .artist-photo-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .artist-photo-section img {
+    width: 280px;
+    height: auto;
+    border-radius: 2px;
+    opacity: 0.9;
+    flex-shrink: 0;
+  }
+
+  .artist-photo-text {
+  }
+
+  .artist-photo-text p {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .artist-photo-text .contact-btn {
+    margin-top: 0.5rem;
+  }
+
+  /* ── PREVIOUS WORK ── */
+  .previous-work {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .previous-work-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .previous-work h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .previous-work .pw-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    max-width: 560px;
+  }
+
+  .coh-tracks {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .coh-track-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .streaming-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .streaming-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.6rem 1.2rem;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .streaming-links a:hover {
+    color: var(--text);
+    border-color: var(--text-muted);
+  }
+
+  .streaming-links + .coh-tracks {
+    margin-top: 2rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 5rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .contact h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .contact-btn {
+    display: inline-block;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--accent);
+    padding: 1rem 2.5rem;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .contact-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 300;
+    transition: border-color 0.3s ease;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  .contact-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .contact-form button {
+    align-self: flex-start;
+  }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { min-height: 100vh; padding: 4rem 1.5rem 3rem; }
+    .hero-content { min-height: 80vh; }
+    .hero-player { max-width: 100%; }
+    section { padding: 3rem 1.5rem; }
+    .track-name { font-size: 1.2rem; }
+    .artist-photo-section {
+      flex-direction: column;
+    }
+    .artist-photo-section img {
+      width: 100%;
+      max-width: 320px;
+    }
+    .previous-work-inner { padding: 3rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Steve Harshbarger</h1>
+      <div class="hero-tagline">Guitarist · Producer · Multi-instrumentalist</div>
+    </div>
+    <div class="hero-player">
+      <div class="hero-player-label">Press play</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799031%3Fsecret_token%3Ds-pAkMaF816Fs&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TRACKS ═══════════ -->
+<section>
+  <div class="the-ask">Seeking a vocalist and lyricist to co-write, record, and perform.</div>
+  <div class="section-label">New Material</div>
+
+  <div class="tracks-grid">
+
+    <div class="track-item">
+      <div class="track-number">01</div>
+      <div class="track-name">Gothenverb</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799031%3Fsecret_token%3Ds-pAkMaF816Fs&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">02</div>
+      <div class="track-name">Medusae Fossae</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289820652%3Fsecret_token%3Ds-4nxZVPDL6SL&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">03</div>
+      <div class="track-name">Quantum Rodeo</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799025%3Fsecret_token%3Ds-KLCumDOXLG3&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">04</div>
+      <div class="track-name">'Oumuamua</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289810578%3Fsecret_token%3Ds-lCBGgGHiFAg&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">05</div>
+      <div class="track-name">Anime</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799034%3Fsecret_token%3Ds-7CGJAPe5pLn&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">06</div>
+      <div class="track-name">Eternity's Blood</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799016%3Fsecret_token%3Ds-z6HcflQmnwW&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">07</div>
+      <div class="track-name">Pillbox</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799022%3Fsecret_token%3Ds-AnQnjnCXioj&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">08</div>
+      <div class="track-name">Dream Sequencer</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799013%3Fsecret_token%3Ds-C0Iodjklkyw&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">09</div>
+      <div class="track-name">Magneto</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289796115%3Fsecret_token%3Ds-mrdJokcp2wW&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">10</div>
+      <div class="track-name">Cure All</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799019%3Fsecret_token%3Ds-fWWnNF2IAJV&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">11</div>
+      <div class="track-name">The Veil</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799028%3Fsecret_token%3Ds-xaYbN0gCuJf&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+    <div class="track-item">
+      <div class="track-number">12</div>
+      <div class="track-name">Ceres' Lament</div>
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799010%3Fsecret_token%3Ds-T91WfYpWPAc&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ ARTIST PHOTO BREAK ═══════════ -->
+<div class="artist-photo-section">
+  <img src="images/steve-studio.jpg" alt="Steve Harshbarger in studio">
+  <div class="artist-photo-text">
+    <p>If the space between fragile and enormous feels like home, let's talk.</p>
+    <a href="#contact" class="contact-btn">Let's Talk</a>
+  </div>
+</div>
+
+<!-- ═══════════ PREVIOUS WORK ═══════════ -->
+<div class="previous-work">
+  <div class="previous-work-inner">
+    <div class="section-label">Previous Work</div>
+    <h2>Cult of Helios</h2>
+    <p class="pw-desc">Music written and produced by Steve Harshbarger.</p>
+
+    <div class="streaming-links">
+      <a href="https://open.spotify.com/artist/3QlQHFg5Zkv7zXPh3584EW" target="_blank" rel="noopener">Spotify</a>
+      <a href="https://music.apple.com/us/artist/cult-of-helios/1460052298" target="_blank" rel="noopener">Apple Music</a>
+    </div>
+
+    <div class="coh-tracks">
+      <div>
+        <div class="coh-track-name">You Look the Same</div>
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291473901%3Fsecret_token%3Ds-5Nqw6XdE1Rv&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+        </iframe>
+      </div>
+      <div>
+        <div class="coh-track-name">Lost to the Sky</div>
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291473580%3Fsecret_token%3Ds-J4cE6dZKBsQ&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<div class="contact" id="contact">
+  <h2>Interested?</h2>
+  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" id="contactForm">
+    <input type="hidden" name="access_key" value="a2e812b1-c732-4f6e-9570-ab237ee79a99">
+    <input type="hidden" name="subject" value="Music collaboration inquiry">
+    <input type="hidden" name="from_name" value="Steve Harshbarger Music">
+    <input type="text" name="name" placeholder="Your name" required>
+    <input type="email" name="email" placeholder="Your email" required>
+    <textarea name="message" placeholder="Tell me about yourself and what you're looking for"></textarea>
+    <button type="submit" class="contact-btn">Send</button>
+  </form>
+  <div class="form-success" id="formSuccess">Thanks — I'll be in touch.</div>
+</div>
+
+<script>
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form)
+      });
+      if (res.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        btn.textContent = 'Error — try again';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Error — try again';
+      btn.disabled = false;
+    }
+  });
+</script>
+
+<footer>
+  &copy; 2026 Steve Harshbarger
+</footer>
+
+</body>
+</html>
