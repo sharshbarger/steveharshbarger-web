@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steve Harshbarger — Music</title>
-<meta property="og:title" content="Steve Harshbarger — Music">
-<meta property="og:description" content="Cinematic, guitar-driven music seeking a vocalist and lyricist to co-write, record, and perform.">
+<title>Ravenette</title>
+<meta property="og:title" content="Ravenette">
+<meta property="og:description" content="Ravenette">
 <meta property="og:image" content="https://steveharshbarger.com/images/steve.jpg">
 <meta property="og:url" content="https://steveharshbarger.com">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Steve Harshbarger — Music">
-<meta name="twitter:description" content="Cinematic, guitar-driven music seeking a vocalist and lyricist to co-write, record, and perform.">
+<meta name="twitter:description" content="Ravenette.">
 <meta name="twitter:image" content="https://steveharshbarger.com/images/steve.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -23,8 +23,8 @@
     --bg-elevated: #141210;
     --text: #e8e0d8;
     --text-muted: #8a8078;
-    --accent: #c45e2c;
-    --accent-glow: rgba(196, 94, 44, 0.15);
+    --accent: #e06a2c;
+    --accent-glow: rgba(224, 106, 44, 0.15);
     --border: rgba(138, 128, 120, 0.15);
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-display: 'Playfair Display', Georgia, serif;
@@ -108,10 +108,6 @@
     border: 1px solid rgba(138, 128, 120, 0.2);
     border-radius: 6px;
     padding: 1.2rem;
-  }
-
-  .hero-player iframe {
-    border-radius: 4px;
   }
 
   .hero-player-label {
@@ -230,8 +226,111 @@
     color: var(--text);
   }
 
-  .track-item iframe {
+  /* ── AUDIO PLAYER ── */
+  .audio-player {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    height: 166px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--border);
     border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .audio-player .ap-thumb {
+    width: 166px;
+    height: 166px;
+    flex-shrink: 0;
+    object-fit: cover;
+    display: block;
+    background: var(--bg-elevated);
+    cursor: pointer;
+  }
+
+  .audio-player .ap-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 0.85rem 1rem 0.65rem;
+    gap: 0.4rem;
+  }
+
+  .audio-player .ap-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 0;
+  }
+
+  .audio-player .ap-play {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    padding: 0;
+  }
+  .audio-player .ap-play:hover,
+  .audio-player .ap-play:focus-visible {
+    background: #b85522;
+    outline: none;
+  }
+  .audio-player .ap-play svg { width: 24px; height: 24px; }
+  .audio-player .ap-play .ap-icon-play { margin-left: 2px; }
+  .audio-player .ap-play[aria-pressed="true"] .ap-icon-play,
+  .audio-player .ap-play[aria-pressed="false"] .ap-icon-pause { display: none; }
+
+  .audio-player .ap-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .audio-player .ap-wave-wrap {
+    position: relative;
+    flex: 1;
+    min-height: 80px;
+  }
+
+  .audio-player .ap-wave {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    display: block;
+  }
+
+  .audio-player .ap-elapsed,
+  .audio-player .ap-total {
+    position: absolute;
+    bottom: 4px;
+    background: rgba(0, 0, 0, 0.78);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    padding: 2px 5px 1px;
+    border-radius: 2px;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .audio-player .ap-elapsed { color: var(--accent); left: 0; }
+  .audio-player .ap-total { color: #fff; right: 0; }
+
+  .hero-player .audio-player {
+    background: transparent;
+    border: none;
   }
 
   /* ── ARTIST PHOTO ── */
@@ -447,6 +546,14 @@
       max-width: 320px;
     }
     .previous-work-inner { padding: 3rem 1.5rem; }
+    .audio-player {
+      flex-direction: column;
+      height: auto;
+    }
+    .audio-player .ap-thumb {
+      width: 100%;
+      height: 200px;
+    }
   }
 </style>
 </head>
@@ -457,119 +564,302 @@
   <div class="hero-bg"></div>
   <div class="hero-content">
     <div class="hero-text">
-      <h1>Steve Harshbarger</h1>
-      <div class="hero-tagline">Guitarist · Producer · Multi-instrumentalist</div>
+      <h1>Ravenette</h1>
+      <div class="hero-tagline"></div>
     </div>
     <div class="hero-player">
-      <div class="hero-player-label">Press play</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799010%3Fsecret_token%3Ds-T91WfYpWPAc&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/craven.m4a"
+           data-peaks="peaks/craven.json"
+           data-thumb="images/thumbs/craven.jpg"
+           data-title="Craven">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Craven" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Craven</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- ═══════════ TRACKS ═══════════ -->
 <section>
-  <div class="the-ask">Seeking a vocalist and lyricist to co-write, record, and perform. Based in San Francisco.</div>
-  <div class="section-label">New Material</div>
+  <div class="the-ask">I'm Steve.<br/><br/>
+    Ravenette is a new project seeking a vocalist and lyricist to co-write, record, perform, and sound nothing else. Based in San Francisco.</div>
+  <div class="section-label">Ideas</div>
 
   <div class="tracks-grid">
 
     <div class="track-item">
       <div class="track-number">01</div>
       <div class="track-name">Gothenverb</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799031%3Fsecret_token%3Ds-pAkMaF816Fs&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/gothenverb.m4a"
+           data-peaks="peaks/gothenverb.json"
+           data-title="Gothenverb">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Gothenverb" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Gothenverb</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">02</div>
       <div class="track-name">Medusae Fossae</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291804888%3Fsecret_token%3Ds-BWRvxivnqq3&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/medusae-fossae.m4a"
+           data-peaks="peaks/medusae-fossae.json"
+           data-title="Medusae Fossae">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Medusae Fossae" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Medusae Fossae</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">03</div>
       <div class="track-name">Quantum Rodeo</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799025%3Fsecret_token%3Ds-KLCumDOXLG3&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/quantum-rodeo.m4a"
+           data-peaks="peaks/quantum-rodeo.json"
+           data-title="Quantum Rodeo">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Quantum Rodeo" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Quantum Rodeo</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">04</div>
       <div class="track-name">'Oumuamua</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289810578%3Fsecret_token%3Ds-lCBGgGHiFAg&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
-    </div>
-
-    <div class="track-item">
-      <div class="track-number">05</div>
-      <div class="track-name">Anime</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291792108%3Fsecret_token%3Ds-TZiB309mOB9&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/oumuamua.m4a"
+           data-peaks="peaks/oumuamua.json"
+           data-title="'Oumuamua">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play 'Oumuamua" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">'Oumuamua</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">06</div>
       <div class="track-name">Eternity's Blood</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799016%3Fsecret_token%3Ds-z6HcflQmnwW&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/eternitys-blood.m4a"
+           data-peaks="peaks/eternitys-blood.json"
+           data-title="Eternity's Blood">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Eternity's Blood" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Eternity's Blood</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">07</div>
       <div class="track-name">Pillbox</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799022%3Fsecret_token%3Ds-AnQnjnCXioj&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/pillbox.m4a"
+           data-peaks="peaks/pillbox.json"
+           data-title="Pillbox">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Pillbox" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Pillbox</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">08</div>
       <div class="track-name">Dream Sequencer</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291792105%3Fsecret_token%3Ds-YvumczZQmJD&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/dream-sequencer.m4a"
+           data-peaks="peaks/dream-sequencer.json"
+           data-title="Dream Sequencer">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Dream Sequencer" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Dream Sequencer</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">09</div>
       <div class="track-name">Magneto</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291792114%3Fsecret_token%3Ds-CIOkgKmL62v&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
-    </div>
-
-    <div class="track-item">
-      <div class="track-number">10</div>
-      <div class="track-name">Cure All</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291792099%3Fsecret_token%3Ds-WWdKycs04DF&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/magneto.m4a"
+           data-peaks="peaks/magneto.json"
+           data-title="Magneto">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Magneto" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Magneto</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">11</div>
       <div class="track-name">The Veil</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291792102%3Fsecret_token%3Ds-8yuLUDNS1KC&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/the-veil.m4a"
+           data-peaks="peaks/the-veil.json"
+           data-title="The Veil">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play The Veil" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">The Veil</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
     <div class="track-item">
       <div class="track-number">12</div>
       <div class="track-name">Ceres' Lament</div>
-      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2289799010%3Fsecret_token%3Ds-T91WfYpWPAc&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-      </iframe>
+      <div class="audio-player"
+           data-src="audio/ceres-lament.m4a"
+           data-peaks="peaks/ceres-lament.json"
+           data-title="Ceres' Lament">
+        <img class="ap-thumb" alt="" loading="lazy">
+        <div class="ap-body">
+          <div class="ap-row">
+            <button class="ap-play" type="button" aria-label="Play Ceres' Lament" aria-pressed="false">
+              <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+            </button>
+            <div class="ap-title">Ceres' Lament</div>
+          </div>
+          <div class="ap-wave-wrap">
+            <canvas class="ap-wave" aria-hidden="true"></canvas>
+            <span class="ap-elapsed">0:00</span>
+            <span class="ap-total">0:00</span>
+          </div>
+        </div>
+        <audio preload="none"></audio>
+      </div>
     </div>
 
   </div>
@@ -599,15 +889,53 @@
     <div class="coh-tracks">
       <div>
         <div class="coh-track-name">You Look the Same</div>
-        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291473901%3Fsecret_token%3Ds-5Nqw6XdE1Rv&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-        </iframe>
+        <div class="audio-player"
+             data-src="audio/coh-you-look-the-same.m4a"
+             data-peaks="peaks/coh-you-look-the-same.json"
+             data-thumb="images/thumbs/coh-you-look-the-same.jpg"
+             data-title="You Look the Same">
+          <img class="ap-thumb" alt="" loading="lazy">
+          <div class="ap-body">
+            <div class="ap-row">
+              <button class="ap-play" type="button" aria-label="Play You Look the Same" aria-pressed="false">
+                <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+              </button>
+              <div class="ap-title">You Look the Same</div>
+            </div>
+            <div class="ap-wave-wrap">
+              <canvas class="ap-wave" aria-hidden="true"></canvas>
+              <span class="ap-elapsed">0:00</span>
+              <span class="ap-total">0:00</span>
+            </div>
+          </div>
+          <audio preload="none"></audio>
+        </div>
       </div>
       <div>
         <div class="coh-track-name">Lost to the Sky</div>
-        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2291473580%3Fsecret_token%3Ds-J4cE6dZKBsQ&color=%23c45e2c&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
-        </iframe>
+        <div class="audio-player"
+             data-src="audio/coh-lost-to-the-sky.m4a"
+             data-peaks="peaks/coh-lost-to-the-sky.json"
+             data-thumb="images/thumbs/coh-lost-to-the-sky.jpg"
+             data-title="Lost to the Sky">
+          <img class="ap-thumb" alt="" loading="lazy">
+          <div class="ap-body">
+            <div class="ap-row">
+              <button class="ap-play" type="button" aria-label="Play Lost to the Sky" aria-pressed="false">
+                <svg class="ap-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                <svg class="ap-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z" fill="currentColor"/></svg>
+              </button>
+              <div class="ap-title">Lost to the Sky</div>
+            </div>
+            <div class="ap-wave-wrap">
+              <canvas class="ap-wave" aria-hidden="true"></canvas>
+              <span class="ap-elapsed">0:00</span>
+              <span class="ap-total">0:00</span>
+            </div>
+          </div>
+          <audio preload="none"></audio>
+        </div>
       </div>
     </div>
   </div>
@@ -653,6 +981,247 @@
       btn.disabled = false;
     }
   });
+
+  // ── AUDIO PLAYER ──
+  const ACCENT = '#e06a2c';
+  const ACCENT_REFLECTION = 'rgba(224, 106, 44, 0.4)';
+  const ACCENT_HOVER = 'rgba(224, 106, 44, 0.45)';
+  const ACCENT_HOVER_REFLECTION = 'rgba(224, 106, 44, 0.18)';
+  const MUTED = 'rgba(255, 255, 255, 0.6)';
+  const MUTED_REFLECTION = 'rgba(255, 255, 255, 0.25)';
+  let currentlyPlaying = null;
+
+  function fmt(s) {
+    if (!isFinite(s) || s < 0) return '0:00';
+    const m = Math.floor(s / 60);
+    const ss = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${ss}`;
+  }
+
+  function drawWaveform(canvas, peaks, progress, hoverFrac) {
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = canvas.clientWidth;
+    const cssH = canvas.clientHeight;
+    if (cssW === 0 || cssH === 0) return;
+    if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+    }
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+
+    const minBarSpacing = 3;
+    const displayBars = Math.max(20, Math.min(peaks.length, Math.floor(cssW / minBarSpacing)));
+    const barTotalW = cssW / displayBars;
+    const barW = Math.max(1, barTotalW - 1);
+    const playedX = Math.max(0, Math.min(1, progress)) * cssW;
+    const hoverX = (hoverFrac != null) ? Math.max(0, Math.min(1, hoverFrac)) * cssW : null;
+    const ratio = peaks.length / displayBars;
+
+    const baselineY = Math.round(cssH * 0.67);
+    const reflectionGap = 1;
+    const mainMaxH = baselineY * 0.95;
+    const reflMaxH = (cssH - baselineY - reflectionGap) * 0.7;
+
+    const heights = new Array(displayBars);
+    for (let i = 0; i < displayBars; i++) {
+      const start = Math.floor(i * ratio);
+      const end = Math.max(start + 1, Math.floor((i + 1) * ratio));
+      let max = 0;
+      for (let j = start; j < end && j < peaks.length; j++) {
+        if (peaks[j] > max) max = peaks[j];
+      }
+      heights[i] = max / 255;
+    }
+
+    function drawPass(mainColor, reflColor) {
+      ctx.fillStyle = mainColor;
+      for (let i = 0; i < displayBars; i++) {
+        const h = Math.max(2, heights[i] * mainMaxH);
+        ctx.fillRect(i * barTotalW, baselineY - h, barW, h);
+      }
+      ctx.fillStyle = reflColor;
+      for (let i = 0; i < displayBars; i++) {
+        const h = Math.max(1, heights[i] * reflMaxH);
+        ctx.fillRect(i * barTotalW, baselineY + reflectionGap, barW, h);
+      }
+    }
+
+    drawPass(MUTED, MUTED_REFLECTION);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, 0, playedX, cssH);
+    ctx.clip();
+    drawPass(ACCENT, ACCENT_REFLECTION);
+    ctx.restore();
+
+    // Hover preview: translucent accent over the range between current playhead and cursor.
+    if (hoverX != null && Math.abs(hoverX - playedX) > 0.5) {
+      const a = Math.min(playedX, hoverX);
+      const b = Math.max(playedX, hoverX);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(a, 0, b - a, cssH);
+      ctx.clip();
+      drawPass(ACCENT_HOVER, ACCENT_HOVER_REFLECTION);
+      ctx.restore();
+      // Thin vertical playhead-preview line at cursor position.
+      ctx.fillStyle = ACCENT;
+      ctx.fillRect(Math.round(hoverX) - 0.5, 0, 1, cssH);
+    }
+  }
+
+  class AudioPlayer {
+    constructor(el) {
+      this.el = el;
+      this.audio = el.querySelector('audio');
+      this.canvas = el.querySelector('.ap-wave');
+      this.btn = el.querySelector('.ap-play');
+      this.thumb = el.querySelector('.ap-thumb');
+      this.elapsedEl = el.querySelector('.ap-elapsed');
+      this.totalEl = el.querySelector('.ap-total');
+
+      this.title = el.dataset.title || '';
+      this.audio.src = el.dataset.src;
+      this.thumb.src = el.dataset.thumb;
+      this.peaks = null;
+      this.duration = 0;
+      this.progress = 0;
+      this.hoverFrac = null;
+      this._pendingSeekFrac = null;
+
+      this.btn.addEventListener('click', () => this.toggle());
+      this.thumb.addEventListener('click', () => this.toggle());
+      this.canvas.addEventListener('click', (e) => this.seekAndPlayFromClick(e));
+      this.canvas.addEventListener('mousemove', (e) => this.onHover(e));
+      this.canvas.addEventListener('mouseleave', () => this.onHoverLeave());
+      this.audio.addEventListener('timeupdate', () => this.onTime());
+      this.audio.addEventListener('loadedmetadata', () => {
+        if (isFinite(this.audio.duration)) {
+          this.duration = this.audio.duration;
+          this.totalEl.textContent = fmt(this.duration);
+        }
+        if (this._pendingSeekFrac != null && this.duration) {
+          this.audio.currentTime = this._pendingSeekFrac * this.duration;
+          this._pendingSeekFrac = null;
+        }
+      });
+      this.audio.addEventListener('ended', () => this.onEnded());
+
+      new ResizeObserver(() => this.redraw()).observe(this.canvas);
+
+      const io = new IntersectionObserver((entries, obs) => {
+        if (entries[0].isIntersecting) {
+          this.loadPeaks();
+          obs.disconnect();
+        }
+      }, { rootMargin: '200px' });
+      io.observe(this.el);
+    }
+
+    async loadPeaks() {
+      try {
+        const res = await fetch(this.el.dataset.peaks);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const j = await res.json();
+        this.peaks = j.data;
+        if (!this.duration && j.duration) {
+          this.duration = j.duration;
+          this.totalEl.textContent = fmt(j.duration);
+        }
+        this.redraw();
+      } catch (e) {
+        console.warn('peaks load failed:', this.el.dataset.peaks, e.message);
+      }
+    }
+
+    async toggle() {
+      if (this.audio.paused) {
+        await this._play();
+      } else {
+        this.pause();
+      }
+    }
+
+    async _play() {
+      if (currentlyPlaying && currentlyPlaying !== this) currentlyPlaying.pause();
+      try {
+        await this.audio.play();
+      } catch {
+        return;
+      }
+      currentlyPlaying = this;
+      this.setPlayingUI(true);
+    }
+
+    pause() {
+      this.audio.pause();
+      this.setPlayingUI(false);
+      if (currentlyPlaying === this) currentlyPlaying = null;
+    }
+
+    setPlayingUI(playing) {
+      this.btn.setAttribute('aria-pressed', String(playing));
+      this.btn.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + this.title);
+    }
+
+    onTime() {
+      this.progress = this.duration ? this.audio.currentTime / this.duration : 0;
+      this.elapsedEl.textContent = fmt(this.audio.currentTime);
+      const cssW = this.canvas.clientWidth;
+      this.elapsedEl.style.left = Math.max(0, Math.min(cssW, this.progress * cssW)) + 'px';
+      this.redraw();
+    }
+
+    onEnded() {
+      this.setPlayingUI(false);
+      this.progress = 0;
+      this.elapsedEl.textContent = '0:00';
+      this.elapsedEl.style.left = '0px';
+      this.redraw();
+      if (currentlyPlaying === this) currentlyPlaying = null;
+    }
+
+    async seekAndPlayFromClick(e) {
+      const rect = this.canvas.getBoundingClientRect();
+      const frac = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if (this.duration) {
+        this.audio.currentTime = frac * this.duration;
+      } else {
+        this._pendingSeekFrac = frac;
+      }
+      await this._play();
+    }
+
+    onHover(e) {
+      const rect = this.canvas.getBoundingClientRect();
+      this.hoverFrac = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      this.redraw();
+    }
+
+    onHoverLeave() {
+      this.hoverFrac = null;
+      this.redraw();
+    }
+
+    redraw() {
+      if (!this.peaks) return;
+      drawWaveform(this.canvas, this.peaks, this.progress, this.hoverFrac);
+    }
+  }
+
+  // Auto-number and auto-alternate thumbs for tracks-grid items: position drives both,
+  // so reordering / adding / removing tracks keeps numbering and alternation correct.
+  document.querySelectorAll('.tracks-grid .track-item').forEach((item, i) => {
+    const numEl = item.querySelector('.track-number');
+    if (numEl) numEl.textContent = String(i + 1).padStart(2, '0');
+    const player = item.querySelector('.audio-player');
+    if (player) player.dataset.thumb = i % 2 === 0 ? 'images/thumbs/track-a.jpg' : 'images/thumbs/track-b.jpg';
+  });
+
+  document.querySelectorAll('.audio-player').forEach(el => new AudioPlayer(el));
 </script>
 
 <footer>
